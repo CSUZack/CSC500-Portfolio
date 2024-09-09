@@ -28,12 +28,10 @@ class ShoppingCart:
                 return
         print("Item not found in cart. Nothing modified.")
     
-    def modify_item(self, ItemToPurchase):
+    def modify_item(self, itemName, itemQuantity):
         for item in self.cart_items:
-            if item.item_name == ItemToPurchase.item_name:
-                item.item_price = ItemToPurchase.item_price if ItemToPurchase.item_price != 0.0 else item.item_price
-                item.description = ItemToPurchase.description if ItemToPurchase.description != "none" else item.description
-                item.item_quantity = ItemToPurchase.item_quantity if ItemToPurchase.item_quantity != 0 else item.item_quantity
+            if item.item_name == itemName:
+                item.item_quantity = itemQuantity
                 return
         print("Item not found in cart. Nothing modified")
     
@@ -80,20 +78,39 @@ q - Quit\n""")
                 shopping_cart.print_descriptions()
             elif selection == 'o':
                 shopping_cart.print_total()
+            elif selection == 'a':
+                print("ADD ITEM TO CART")
+                itemName = input("Enter the item name:\n")
+                itemDescription = input("Enter the item description:\n")
+                itemQuantity = int(input("Enter the item quantity:\n"))
+                itemPrice = float(input("Enter the item price:\n"))
+                shopping_cart.add_item(ItemToPurchase(itemName, itemDescription, itemPrice, itemQuantity))
+            elif selection == 'r':
+                print("REMOVE ITEM FROM CART")
+                itemName = input("Enter name of the item to remove:\n")
+                shopping_cart.remove_item(itemName)
+            elif selection == 'c':
+                print("CHANGE ITEM QUANTITY")
+                itemName = input("Enter name of the item to change:\n")
+                itemQuantity = int(input("Enter the new quantity:\n"))
+                shopping_cart.modify_item(itemName, itemQuantity)
+
         else:
             print("Please make a valid selection")
         
 
-my_shopping_cart = ShoppingCart("Zack's Grocery Store", "August 25, 2024")
 
 carrots = ItemToPurchase("carrot", "baby carrots", 5.5, 3)
 lettuce = ItemToPurchase("lettuce", "head of lettuce", 3.1, 1)
 bread = ItemToPurchase("bread", "loaf of bread", 4.2, 2)
 cheese = ItemToPurchase("cheese", "sliced cheddar cheese", 4.5, 3)
 
-my_shopping_cart.add_item(carrots)
-my_shopping_cart.add_item(lettuce)
-my_shopping_cart.add_item(bread)
-my_shopping_cart.add_item(cheese)
 
-print_menu(my_shopping_cart)
+shoppingCartName = input("Please enter your name:\n")
+shoppingCartDate = input("Please enter the current date:\n")
+print(f"Customer Name: {shoppingCartName}")
+print(f"Current Date: {shoppingCartDate}")
+
+myShoppingCart = ShoppingCart(shoppingCartName + "'s Shopping Cart", shoppingCartDate)
+
+print_menu(myShoppingCart)
